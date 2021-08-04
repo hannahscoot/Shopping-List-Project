@@ -1,0 +1,153 @@
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Shopping List</title>
+        <base href="/"> 
+        <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+        <link href="/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-csp.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+        <!--<script src="/app.js"></script>-->
+    </head>
+    <body ng-app="app">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbartog" aria-controls="navbartog" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand">
+                Shopping List
+            </a>
+            <div class="collapse navbar-collapse" id="navbartog">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link">List Link 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">List Link 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">List Link 3</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div ng-controller="MainController as vm" >
+                <br />
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="card bg-light">
+                            <h5 class="card-title display-4 text-center">Current List</h5>
+                            <div class="card-body">
+                                <ul class="list-group" id="currentItemList" style="cursor:pointer">
+                                    <li ng-repeat="item in vm.currentItemList" class="list-group-item">
+                                        <button class="btn btn-default btn-sm shadow-none" ng-click="vm.priority(item)" ng-switch="item.priority">
+                                            <span ng-switch-when='false' class="bi bi-exclamation-circle"></span>
+                                            <span ng-switch-when='true' class="bi bi-exclamation-circle-fill"></span>
+                                        </button>
+                                        {{item.name}}
+                                        <div class="btn-group dropright" style="float:right">
+                                            <button class="btn btn-default btn-sm shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="bi bi-three-dots-vertical"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" ng-click="vm.editItem(item)">Edit</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item delete-item" ng-click="vm.deleteItem(item)">Delete</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="list-group-item mt-1 rounded" style="cursor:pointer">
+                                    <button class="btn btn-default btn-block shadow-none" ng-click="vm.addItem()">
+                                        <span class="bi bi-plus-circle text-center"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-center list-arrows" style="padding-top:100px">
+                        <button class="btn btn-default btn-lg shadow-none" ng-click="vm.left()">
+                            <span class="bi bi-arrow-up-square-fill d-md-none"></span>
+                            <span class="bi bi-arrow-left-square d-none d-md-block"></span>
+                        </button>
+                        <button class="btn btn-default btn-lg shadow-none" ng-click="vm.right()">
+                            <span class="bi bi-arrow-down-square-fill d-md-none"></span>
+                            <span class="bi bi-arrow-right-square d-none d-md-block"></span>
+                        </button>
+                        <button class="btn btn-default btn-lg shadow-none" ng-click="vm.up()">
+                            <span class="bi bi-arrow-up-square"></span>
+                        </button>
+                        <button class="btn btn-default btn-lg shadow-none" ng-click="vm.down()">
+                            <span class="bi bi-arrow-down-square"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card bg-light">
+                            <h5 class="card-title display-4 text-center">Previous List</h5>
+                            <div class="card-body">
+                                <ul class="list-group" id="previousItemList" style="cursor:pointer">
+                                    <li ng-repeat="item in vm.previousItemList" class="list-group-item">
+                                        {{item.name}}
+                                        <div class="btn-group dropright" style="float:right">
+                                            <button class="btn btn-default btn-sm shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="bi bi-three-dots-vertical"></span>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" ng-click="vm.editItem(item)">Edit</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item delete-item" ng-click="vm.deleteItem(item)">Delete</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/ng-template" id="addModalTemplate.html">
+                    <div class="modal-header">
+                        <h3 ng-hide="vm.item.name != 0">Create Item</h3>
+                        <h3 ng-show="vm.item.id != 0">Edit Item</h3>
+                        <button type="button" class="close" ng-click="vm.close()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form ng-submit="vm.save()" role="form">
+                            <label for="#nameInput" ng-hide="vm.item.id != 0">Enter what item you want to add:</label>
+                            <label for="#nameInput" ng-show="vm.item.id != 0">Enter what you want to rename this item to:</label>
+                            <input type="text" class="form-control" id="nameInput" ng-model="vm.item.name" autocomplete="off" required
+                                    oninvalid="this.setCustomValidity('This field cannot be left blank')"
+                                    oninput="this.setCustomValidity('')">
+                            <button type="button" class="btn btn-light float-right mt-3 ml-3" ng-click="vm.close()">Close</button>
+                            <button type="submit" class="btn btn-primary float-right mt-3">Submit</button>
+                        </form>
+                    </div>
+                </script>
+                <script type="text/ng-template" id="deleteModalTemplate.html">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to remove {{vm.item.name}} from the current list?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="vm.save(vm.item)">Confirm</button>
+                        <button type="button" class="btn btn-light" ng-click="vm.close()">Close</button>
+                    </div>
+                </script>                
+            </div>
+        </div>
+    </body>
+</html>

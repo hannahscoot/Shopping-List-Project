@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body ng-controller="listsCtrl">
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card bg-light">
+                    <h5 class="card-title display-4 text-center">Current List</h5>
+                    <div class="card-body">
+                        <ul class="list-group" id="currentItemList" style="cursor:pointer">
+                            <li ng-repeat="item in currentItemList" class="list-group-item">
+                                <button class="btn btn-default btn-sm" ng-click="prioritySwitch(item)" ng-switch="item.priority">
+                                    <span ng-switch-when="false" class="bi bi-exclamation-circle"></span>
+                                    <span ng-switch-when="true" class="bi bi-exclamation-circle-fill"></span>
+                                </button>
+                                {{item.name}}
+                                <div class="btn-group dropright" style="float:right">
+                                    <button class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="bi bi-three-dots-vertical"></span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#editItemModal{{item.id}}">Edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item delete-item" data-toggle="modal" data-target="#deleteItemModal{{item.id}}">Delete</a>
+                                    </div>
+                                    <div class="modal" id="deleteItemModal{{item.id}}" tabindex="-1" aria-labelledby="deleteItemModal{{item.id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to remove {{item.name}} from the current list?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary deleteListItem" data-dismiss="modal" ng-click="deleteItem(item.id)">Confirm</button>
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal" id="editItemModal{{item.id}}" tabindex="-1" aria-labelledby="editItemModal{{item.id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form ng-submit="editItem(item.id)" role="form">
+                                                        <label for="#nameInput">Enter what you want to rename {{item.name}} to:</label>
+                                                        <input type="text" class="form-control" id="nameInput" ng-model="newItem.name" autocomplete="off" required
+                                                               oninvalid="this.setCustomValidity('This field cannot be left blank')"
+                                                               oninput="this.setCustomValidity('')">
+                                                        <button type="button" class="btn btn-light float-right mt-3 ml-3" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary float-right mt-3">Save changes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="list-group-item mt-1 rounded" style="cursor:pointer">
+                            <button class="btn btn-default btn-block" data-toggle="modal" data-target="#addNewItemModal">
+                                <span class="bi bi-plus-circle text-center"></span>
+                            </button>
+                            <div class="modal" id="addNewItemModal" tabindex="-1" aria-labelledby="addNewItemModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addNewItemModalLabel">Add New Item</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form ng-submit="addNewItem()" role="form">
+                                                <label for="#nameInput">Enter what item you want to add:</label>
+                                                <input type="text" class="form-control" id="nameInput" ng-model="newItem.name" autocomplete="off" required
+                                                       oninvalid="this.setCustomValidity('This field cannot be left blank')"
+                                                       oninput="this.setCustomValidity('')">
+                                                <button type="button" class="btn btn-light float-right mt-3 ml-3" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary float-right mt-3">Add Item</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-1 text-center list-arrows" style="padding-top:100px">
+                <button class="btn btn-default btn-lg previous-to-current">
+                    <span class="bi bi-arrow-up-square-fill d-md-none"></span>
+                    <span class="bi bi-arrow-left-square d-none d-md-block"></span>
+                </button>
+                <button class="btn btn-default btn-lg current-to-previous">
+                    <span class="bi bi-arrow-down-square-fill d-md-none"></span>
+                    <span class="bi bi-arrow-right-square d-none d-md-block"></span>
+                </button>
+                <button class="btn btn-default btn-lg move-up">
+                    <span class="bi bi-arrow-up-square"></span>
+                </button>
+                <button class="btn btn-default btn-lg move-down">
+                    <span class="bi bi-arrow-down-square"></span>
+                </button>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card bg-light">
+                    <h5 class="card-title display-4 text-center">Previous List</h5>
+                    <div class="card-body">
+                        <ul class="list-group" id="previousItemList" style="cursor:pointer">
+                            <li ng-repeat="item in previousItemList" class="list-group-item">
+                                {{item.name}}
+                                <div class="btn-group dropright" style="float:right">
+                                    <button class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="bi bi-three-dots-vertical"></span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#editItemModal{{item.id}}">Edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item delete-item" data-toggle="modal" data-target="#deleteItemModal{{item.id}}">Delete</a>
+                                    </div>
+                                    <div class="modal" id="deleteItemModal{{item.id}}" tabindex="-1" aria-labelledby="deleteItemModal{{item.id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to remove {{item.name}} from the previous list?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary deleteListItem" data-dismiss="modal" ng-click="deleteItem(item.id)">Confirm</button>
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal" id="editItemModal{{item.id}}" tabindex="-1" aria-labelledby="editItemModal{{item.id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form ng-submit="editItem(item.id)" role="form">
+                                                        <label for="#nameInput">Enter what you want to rename {{item.name}} to:</label>
+                                                        <input type="text" class="form-control" id="nameInput" ng-model="newItem.name" autocomplete="off" required
+                                                               oninvalid="this.setCustomValidity('This field cannot be left blank')"
+                                                               oninput="this.setCustomValidity('')">
+                                                        <button type="button" class="btn btn-light float-right mt-3 ml-3" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary float-right mt-3">Save changes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <button class="btn btn-default text-center" data-toggle="modal" data-target="#saveListModal">
+                    Save Current List
+                </button>
+                <button class="btn btn-default text-center" data-toggle="modal" data-target="#wipeListModal">
+                    Clear List
+                </button>
+                <button class="btn btn-default text-center" data-toggle="modal" data-target="#importListModal">
+                    Load Previous List
+                </button>
+                <div class="modal fade" id="saveListModal" tabindex="-1" aria-labelledby="saveListModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to overwrite the previous list with the current list?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="saveCurrentList" data-dismiss="modal">Confirm</button>
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="wipeListModal" tabindex="-1" aria-labelledby="wipeListModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to remove all items from the current list?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="clearCurrentList" data-dismiss="modal">Confirm</button>
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="importListModal" tabindex="-1" aria-labelledby="importListModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to add all of items on the previous list onto the current list?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="loadPreviousList" data-dismiss="modal">Confirm</button>
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aria-live="polite" aria-atomic="true">
+        <div style="position: absolute; bottom: 25px; right: 25px;">
+            <div id="errorToast" class="toast hide bg-warning" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+                <div class="toast-header bg-warning">
+                    <i class="bi bi-exclamation-square-fill mr-2 text-white"></i>
+                    <strong class="mr-auto text-white">Oops</strong>
+                    <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body text-white" id="errorToastBody">
+                </div>
+            </div>
+            <div id="successToast" class="toast hide bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+                <div class="toast-header bg-success">
+                    <i class="bi bi-check-square-fill mr-2 text-white"></i>
+                    <strong class="mr-auto text-white">Success</strong>
+                    <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body text-white" id="successToastBody">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

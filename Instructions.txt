@@ -1,0 +1,140 @@
+Shopping List Manager
+
+PLEASE NOTE: 
+
+You are allowed to use code from other sources - provided you have permission from the original author to do so.
+This includes use of third-party libraries and UI components.
+If you do use code from other sources, please give credit to the original author in the comments and do not attempt to pass the code off as your own.
+While it is acceptable to use other people's code with permission and with citations, an over-reliance on third-party code may affect your overall score.
+
+Running this app:
+
+(1) Ensure you have node.js installed on your PC: https://nodejs.org/en/download/
+(2) Ensure you have angular cli installed on your PC: https://cli.angular.io/
+(3) Open a powershell in the project's folder and run 'npm install' followed by 'ng serve'
+(4) Navigate to localhost:4200 in your browser of choice to view the app running
+
+Overview:
+
+You are required to design a web app which allows the user to generate a shopping list.
+
+The app is comprised of two lists: 
+    (1) the 'Current' list -  the list of items the user wants to buy
+    (2) the 'Previous' list - the list of items the user has added to previous lists in the past
+
+The user should be able to add new items to the 'Current' list, as well as adding previously-used items from the 'Previous' list. 
+It should be possible to move items back and forth between lists, as well as editing and deleting items. 
+The user should also be able to order the items in the 'Current' list manually, using arrows buttons in the user interface.
+
+We use a ticketing system to manage our workload. 'Stories' are created and assigned to developers. 
+These stories are broken down into sub-tickets, each ticket describing a specific bit of functionality.
+Each ticket is given a priority. For the purpose of this test, we have created two priority levels: 'Urgent' and 'Minor'.
+
+This story has been divided into several tickets. 
+Please complete all tickets with a priority level of 'Urgent' and at least one ticket with a priority level of 'Minor'.
+If you wish to demonstrate your skills further by taking on more of the 'Minor' priority tickets, feel free to do so. 
+However, you will be judged on the quality of the work, not the quantity, so do not pressure yourself to complete all the tickets.
+This is your opportunity to show us what you can do, so choose a 'Minor' priority ticket or tickets that best demonstrate your skillset.
+
+(Please note: This project does not require a database to be set up, so please hard-code items for the 'Previous' list or use 
+some of form of local storage.)
+
+TICKET 1 - Create UI layout in HTML as per prototype document
+PRIORITY: URGENT
+
+In the ShoppingListMockUp.pdf you will see a rough mock up of how we expect the app to look.
+Recreate this in HTML in the file shopping-list-component.component.html using appropriate HTML5 elements.
+
+TICKET 2 - Style Shopping List App using css and Bootstrap 4
+PRIORITY: URGENT
+
+Use Bootstrap 4 classes to style your components, using the shopping-list-component.component.css file.
+
+TICKET 3 - Create models for 'Current' and 'Previous' lists and display in the HTML
+PRIORITY: URGENT
+
+The Lists should be modelled in the shopping-list-component.component.ts file. 
+The 'ListItem' class has already been defined and imported.
+Use the 'models' folder to create any more classes you think may be necessary and import them into the ShoppingListComponent.
+Populate the 'Previous' list with a hard-coded list of items.
+
+TICKET 4 - Implement functionality for moving items between the 'Current' and 'Previous' lists using arrow buttons
+PRIORITY: URGENT
+
+The user should be able to move items between the lists by first clicking on the item in the list and clicking on the appropriate arrow button:
+The left-pointing arrow moves the item from the 'Previous' List to the 'Current' List and the right-pointing arrow moves items
+from the 'Current' List to the 'Previous' List.
+When the user clicks on the list item, the css styling should change appropriately to show it has been clicked.
+
+Ticket 5 - Implement functionality for adding a new item to the 'Current' list
+PRIORITY: URGENT
+
+The user should be able to add a completely new item to the 'Current' list.
+NOTE: the UI element for this functionality is not included in the mock-up.
+NOTE: It is not expected that changes persist after the browser is closed or the app is restarted.
+EXTRA CREDIT: Use a modal element for adding a new item.
+See: https://ng-bootstrap.github.io/#/components/modal/examples for examples (or use your own).
+
+Ticket 6 - Implement functionality for editing an item on the either list
+PRIORITY: URGENT
+
+The user should be able to edit an item's name in either list.
+NOTE: the UI element for this functionality is not included in the mock-up.
+NOTE: It is not expected that changes persist after the browser is closed or the app is restarted.
+EXTRA CREDIT: Use a modal element for editing an item.
+See: https://ng-bootstrap.github.io/#/components/modal/examples for examples (or use your own).
+
+Ticket 7 - Implement functionality for deleting an item from the 'Previous' list
+PRIORITY: URGENT
+
+It should be possible to delete permanently an item from the 'Previous' List.
+NOTE: the UI element for this functionality is not included in the mock-up.
+NOTE: It is not expected that changes persist after the browser is closed or the app is restarted.
+EXTRA CREDIT: the user should be warned via an appropriate UI interface that the item will be permanently deleted.
+
+Ticket 8 - Implement functionality for manually re-ordering 'Current' list
+PRIORITY: URGENT
+
+The user should be able to order the items on the 'Current' list using the 'Up' and 'Down' arrows.
+The user should click on an item to select it and move it up and down the list by clicking the appropriate button.
+
+Ticket 9 - Validation to prevent duplicate items being added to either list
+PRIORITY: MINOR
+
+The user should not be able to add multiple items with the same name.
+Add client-side validation to the app to prevent this.
+Give useful feedback to the user when they are prevented from adding a duplicate item.
+
+Ticket 10 - Flag 'High Priority' items on the 'Current' List
+PRIORITY: MINOR
+
+The user should be able to set items in the 'Current' list as high priority. 
+The 'high priority' items should be flagged with a red exclamation mark.
+These items should be 'stickied' to the top of the 'Current' list. 
+It should not be possible for items which are not high priority to appear higher in the list than high priority items.
+
+Ticket 11 - Save and Load data user the browser's local storage
+PRIORITY: MINOR
+
+Allow the changes made by the user to persist once the page is reloaded by using the browser's local storage.
+See: https://www.w3schools.com/html/html5_webstorage.asp
+
+Ticket 12 - Responsive UI - Allow the app to scale flexibly when viewed on desktop or mobile
+PRIORITY: MINOR
+
+Make the app look beautiful regardless of whether it is viewed on a desktop or mobile platform.
+In mobile mode, optimise UI elements for the finger-presses instead of mouse clicks.
+
+Ticket 13 - Format the list of links at the top of the page into an elegant navigation banner
+PRIORITY: MINOR
+
+Turn the nav element in app.component.html into a functional navigation banner.
+Make it look as pretty as possible while maintaining functionality.
+See: https://getbootstrap.com/docs/4.0/components/navbar/ for examples (or use your own)
+NOTE: The links in the banner do not have to work and you do not need to create pages for them. 
+
+Ticket 14 - Allow the user to export the 'Current' list into another format
+PRIORITY: MINOR
+
+The user will want to use the shopping list in the real world. 
+Allow the user to export the list into another format, e.g. .csv, .txt, .pdf.
